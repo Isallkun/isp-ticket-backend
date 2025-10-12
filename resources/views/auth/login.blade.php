@@ -47,7 +47,7 @@
     .card-header.gradient-header {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         border: none;
-        padding: 2.5rem 2rem;
+        padding: 2rem 1.5rem;
         position: relative;
     }
 
@@ -63,26 +63,26 @@
     }
 
     .logo-circle {
-        width: 80px;
-        height: 80px;
+        width: 60px;
+        height: 60px;
         background: rgba(255, 255, 255, 0.2);
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        margin: 0 auto 1.25rem;
+        margin: 0 auto 1rem;
         border: 3px solid rgba(255, 255, 255, 0.3);
         backdrop-filter: blur(10px);
     }
 
     .logo-circle i {
-        font-size: 2rem;
+        font-size: 1.5rem;
         color: white;
     }
 
     .card-header h3 {
         font-weight: 700;
-        font-size: 1.75rem;
+        font-size: 1.5rem;
         text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     }
 
@@ -92,7 +92,7 @@
     }
 
     .card-body.enhanced {
-        padding: 2.5rem 2rem 2rem;
+        padding: 2rem 1.5rem 1.5rem;
     }
 
     .form-label {
@@ -110,8 +110,8 @@
     .form-control.modern {
         border: 2px solid #e2e8f0;
         border-radius: 12px;
-        padding: 0.875rem 1.125rem;
-        font-size: 0.95rem;
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
         transition: all 0.3s ease;
         background: #f8fafc;
     }
@@ -269,11 +269,20 @@
             padding: 2rem 1.5rem 1.5rem;
         }
     }
+
+    .login-page {
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    .min-vh-100 {
+        min-height: 100vh !important;
+    }
 </style>
 
 <div class="container-fluid login-page">
     <div class="row justify-content-center min-vh-100 align-items-center">
-        <div class="col-md-5 col-lg-4">
+        <div class="col-11 col-sm-9 col-md-7 col-lg-5 col-xl-4">
             <div class="card login-card shadow-lg">
                 <div class="card-header gradient-header text-white text-center">
                     <div class="logo-circle">
@@ -294,7 +303,7 @@
     <form method="POST" action="{{ route('login.post') }}">
       @csrf
 
-                        <div class="mb-4">
+                        <div class="mb-3">
                             <label for="email" class="form-label">
                                 <i class="fas fa-envelope"></i>Email
                             </label>
@@ -311,7 +320,7 @@
                             @enderror
                         </div>
 
-                        <div class="mb-4">
+                        <div class="mb-3">
                             <label for="password" class="form-label">
                                 <i class="fas fa-lock"></i>Password
                             </label>
@@ -326,7 +335,7 @@
                             @enderror
                         </div>
 
-                        <div class="mb-4">
+                        <div class="mb-3">
                             <div class="form-check">
                                 <input type="checkbox"
                                        class="form-check-input"
@@ -338,7 +347,7 @@
       </div>
       </div>
 
-                        <button type="submit" class="btn btn-gradient w-100 mb-3">
+                        <button type="submit" class="btn btn-gradient w-100 mb-2">
                             <i class="fas fa-sign-in-alt"></i>Login
                         </button>
     </form>

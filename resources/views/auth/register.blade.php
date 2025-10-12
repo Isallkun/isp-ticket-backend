@@ -47,52 +47,53 @@
     .card-header.gradient-header {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         border: none;
-        padding: 2.5rem 2rem;
+        padding: 1rem 1.5rem;
         position: relative;
     }
 
     .card-header.gradient-header::after {
         content: '';
         position: absolute;
-        bottom: -20px;
+        bottom: -15px;
         left: 0;
         right: 0;
-        height: 40px;
+        height: 30px;
         background: white;
         border-radius: 50% 50% 0 0 / 100% 100% 0 0;
     }
 
     .logo-circle {
-        width: 80px;
-        height: 80px;
+        width: 40px;
+        height: 40px;
         background: rgba(255, 255, 255, 0.2);
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        margin: 0 auto 1.25rem;
+        margin: 0 auto 0.5rem;
         border: 3px solid rgba(255, 255, 255, 0.3);
         backdrop-filter: blur(10px);
     }
 
     .logo-circle i {
-        font-size: 2rem;
+        font-size: 1rem;
         color: white;
     }
 
     .card-header h3 {
         font-weight: 700;
-        font-size: 1.75rem;
+        font-size: 1.1rem;
         text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     }
 
     .card-header p {
         opacity: 0.95;
-        font-size: 0.95rem;
+        font-size: 0.75rem;
+        margin-bottom: 0;
     }
 
     .card-body.enhanced {
-        padding: 2.5rem 2rem 2rem;
+        padding: 1.5rem 1.5rem 1rem;
     }
 
     .form-label {
@@ -110,8 +111,8 @@
     .form-control.modern {
         border: 2px solid #e2e8f0;
         border-radius: 12px;
-        padding: 0.875rem 1.125rem;
-        font-size: 0.95rem;
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
         transition: all 0.3s ease;
         background: #f8fafc;
     }
@@ -129,6 +130,21 @@
 
     .form-control.modern.is-invalid:focus {
         box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.1);
+    }
+
+    .form-select.modern {
+        border: 2px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+        background: #f8fafc;
+    }
+
+    .form-select.modern:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 0.25rem rgba(102, 126, 234, 0.1);
+        background: white;
     }
 
     .form-check-input {
@@ -241,14 +257,23 @@
         }
 
         .card-body.enhanced {
-            padding: 2rem 1.5rem 1.5rem;
+            padding: 1.5rem 1rem 1rem;
         }
+    }
+
+    .register-page {
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    .min-vh-100 {
+        min-height: 100vh !important;
     }
 </style>
 
 <div class="container-fluid register-page">
     <div class="row justify-content-center min-vh-100 align-items-center">
-        <div class="col-md-6 col-lg-5">
+        <div class="col-11 col-sm-9 col-md-7 col-lg-5 col-xl-4">
             <div class="card register-card shadow-lg">
                 <div class="card-header gradient-header text-white text-center">
                     <div class="logo-circle">
@@ -270,7 +295,7 @@
                         @csrf
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="mb-4">
+                                <div class="mb-3">
                                     <label for="name" class="form-label">
                                         <i class="fas fa-user"></i> Nama Lengkap
                                     </label>
@@ -288,7 +313,7 @@
                             </div>
                         </div>
                             <div class="col-md-6">
-                                <div class="mb-4">
+                                <div class="mb-3">
                                     <label for="email" class="form-label">
                                         <i class="fas fa-envelope"></i> Email
                                     </label>
@@ -308,7 +333,7 @@
 
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="mb-4">
+                                <div class="mb-3">
                                     <label for="password" class="form-label">
                                         <i class="fas fa-lock"></i> Password
                                     </label>
@@ -324,7 +349,7 @@
                             </div>
                         </div>
                             <div class="col-md-6">
-                                <div class="mb-4">
+                                <div class="mb-3">
                                     <label for="password_confirmation" class="form-label">
                                         <i class="fas fa-lock"></i> Konfirmasi Password
                                     </label>
@@ -338,7 +363,7 @@
                             </div>
                         </div>
 
-                        <div class="mb-4">
+                        <div class="mb-3">
                             <label for="role" class="form-label">
                                 <i class="fas fa-user-tag"></i> Role
                             </label>
@@ -356,7 +381,7 @@
                             @enderror
                         </div>
 
-                        <div class="mb-4">
+                        <div class="mb-3">
                             <div class="form-check">
                                 <input type="checkbox"
                                        class="form-check-input"
@@ -368,7 +393,7 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-gradient w-100 mb-3">
+                        <button type="submit" class="btn btn-gradient w-100 mb-2">
                             <i class="fas fa-user-plus"></i> Daftar
                         </button>
                     </form>
