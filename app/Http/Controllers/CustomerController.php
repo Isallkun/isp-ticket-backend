@@ -21,6 +21,14 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:customers,email',
+            'phone' => 'nullable|string|max:20',
+            'address' => 'nullable|string|max:500',
+            'company' => 'nullable|string|max:255',
+        ]);
+
         Customer::create($request->all());
         return redirect()->route('customers.index')->with('success', 'Customer created successfully');
     }
@@ -34,7 +42,17 @@ class CustomerController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $customer = Customer::findOrFail($id);
+        return view('customers.show', compact('customer'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        $customer = Customer::findOrFail($id);
+        return view('customers.form', compact('customer'));
     }
 
     /**
@@ -42,7 +60,18 @@ class CustomerController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $customer = Customer::findOrFail($id);
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:customers,email,' . $id,
+            'phone' => 'nullable|string|max:20',
+            'address' => 'nullable|string|max:500',
+            'company' => 'nullable|string|max:255',
+        ]);
+
+        $customer->update($request->all());
+        return redirect()->route('customers.index')->with('success', 'Customer updated successfully');
     }
 
     /**
@@ -50,6 +79,14 @@ class CustomerController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $customer = Customer::findOrFail($id);
+
+        // Check if customer has any tickets before deleting
+        if ($customer->tickets()->exists()) {
+            return redirect()->route('customers.index')->with('error', 'Cannot delete customer with existing tickets');
+        }
+
+        $customer->delete();
+        return redirect()->route('customers.index')->with('success', 'Customer deleted successfully');
     }
 }

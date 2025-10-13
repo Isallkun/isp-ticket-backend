@@ -29,16 +29,30 @@ class TicketController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'customer_id' => 'required|exists:customers,id',
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|max:2000',
+            'priority' => 'required|in:Low,Medium,High,Critical',
+            'category' => 'nullable|string|max:100',
+        ]);
+
         $ticket = Ticket::create($request->all());
         TicketLog::create(['ticket_id' => $ticket->id, 'status' => 'Open', 'user_id' => Auth::id()]);
         return redirect()->route('tickets.index')->with('success', 'Ticket created successfully');
     }
 
     public function updateStatus(Request $req, $id) {
+        $req->validate([
+            'status' => 'required|in:Open,In Progress,Resolved,Closed',
+        ]);
+
         $ticket = Ticket::findOrFail($id);
+
         if ($req->status === 'Closed' && $ticket->status !== 'Resolved') {
             return redirect()->back()->with('error', 'Ticket must be resolved before closing');
         }
+
         $ticket->update(['status' => $req->status]);
         TicketLog::create(['ticket_id' => $ticket->id, 'status' => $req->status, 'user_id' => Auth::id()]);
         return redirect()->back()->with('success', 'Status updated successfully');
@@ -54,11 +68,32 @@ class TicketController extends Controller
     }
 
     /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        $ticket = Ticket::with('customer')->findOrFail($id);
+        $customers = Customer::all();
+        return view('tickets.form', compact('ticket', 'customers'));
+    }
+
+    /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-        //
+        $ticket = Ticket::findOrFail($id);
+
+        $request->validate([
+            'customer_id' => 'required|exists:customers,id',
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|max:2000',
+            'priority' => 'required|in:Low,Medium,High,Critical',
+            'category' => 'nullable|string|max:100',
+        ]);
+
+        $ticket->update($request->all());
+        return redirect()->route('tickets.index')->with('success', 'Ticket updated successfully');
     }
 
     /**
@@ -66,6 +101,17 @@ class TicketController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $ticket = Ticket::findOrFail($id);
+
+        // Check if ticket can be deleted (only if it's in 'Open' status)
+        if ($ticket->status !== 'Open') {
+            return redirect()->route('tickets.index')->with('error', 'Can only delete tickets with Open status');
+        }
+
+        // Delete ticket logs first
+        $ticket->logs()->delete();
+
+        $ticket->delete();
+        return redirect()->route('tickets.index')->with('success', 'Ticket deleted successfully');
     }
 }
