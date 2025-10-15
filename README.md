@@ -1,61 +1,344 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# ISP Ticket Management System
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <img src="https://img.icons8.com/color/96/000000/ticket.png" alt="ISP Ticket System" width="80"/>
 </p>
 
-## About Laravel
+<p align="center">
+  <strong>Sistem Manajemen Tiket Gangguan ISP</strong><br>
+  Solusi modern untuk mengelola laporan gangguan pelanggan dengan efisien dan terstruktur
+</p>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+<p align="center">
+  <img src="https://img.shields.io/badge/Laravel-12.33.0-red" alt="Laravel Version">
+  <img src="https://img.shields.io/badge/PHP-8.2+-blue" alt="PHP Version">
+  <img src="https://img.shields.io/badge/MySQL-8.0+-green" alt="MySQL Version">
+  <img src="https://img.shields.io/badge/Bootstrap-5.3.0-purple" alt="Bootstrap Version">
+</p>
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🌟 Fitur Utama
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Role-Based Access Control (RBAC)
 
-## Learning Laravel
+Sistem dirancang dengan 3 role yang sesuai dengan alur kerja ISP:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+-   **🎧 Customer Service (CS)**: Garda terdepan yang berinteraksi langsung dengan pelanggan
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+    -   ✅ Mendaftarkan pelanggan baru
+    -   ✅ Membuat tiket gangguan
+    -   ✅ Mengelola data pelanggan
+    -   ✅ Melihat tiket yang dibuat
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+-   **🔧 NOC Agent**: Memproses tiket gangguan dan penanganan teknis
 
-## Laravel Sponsors
+    -   ✅ Melihat semua tiket
+    -   ✅ Memperbarui status tiket
+    -   ✅ Menetapkan prioritas dan penugasan
+    -   ✅ Edit dan hapus tiket
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+-   **👨‍💼 Administrator**: Kendali penuh sistem
+    -   ✅ Mengelola semua data
+    -   ✅ Manajemen user accounts
+    -   ✅ Monitoring dan laporan analitik
+    -   ✅ Full system access
 
-### Premium Partners
+### 🎫 Manajemen Tiket
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+-   ✅ Pembuatan tiket gangguan dengan prioritas (Low, Medium, High, Critical)
+-   ✅ Status tracking (Open, In Progress, Resolved, Closed)
+-   ✅ Timeline perubahan status dengan activity log
+-   ✅ Filtering dan searching tiket
+-   ✅ Kategori gangguan (Internet, Telepon, TV, Lainnya)
 
-## Contributing
+### 👥 Manajemen Pelanggan
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+-   ✅ Registrasi pelanggan baru
+-   ✅ Data pelanggan lengkap (nama, email, telepon, alamat)
+-   ✅ History tiket per pelanggan
+-   ✅ CRUD operations dengan validasi
 
-## Code of Conduct
+### 📊 Dashboard Dinamis
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+-   ✅ Role-specific dashboard dengan informasi relevan
+-   ✅ Statistik real-time tiket (Total, Open, In Progress, Resolved)
+-   ✅ Quick actions berdasarkan role dan permission
+-   ✅ Chart visualisasi status tiket dengan Chart.js
 
-## Security Vulnerabilities
+## 🛠️ Teknologi yang Digunakan
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+-   **Backend**: Laravel 12.33.0
+-   **Frontend**: Bootstrap 5.3.0 + Blade Templates
+-   **Database**: MySQL
+-   **Authentication**: Laravel's built-in authentication dengan role-based system
+-   **Styling**: Custom CSS dengan gradient modern dan animasi smooth
+-   **Icons**: Font Awesome 6.0.0
+-   **Charts**: Chart.js untuk visualisasi data
 
-## License
+## 📋 Prerequisites
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+-   PHP 8.2+
+-   MySQL 8.0+
+-   Composer
+-   Node.js & NPM (untuk assets compilation jika diperlukan)
+
+## 🚀 Instalasi
+
+1. **Clone Repository**
+
+    ```bash
+    git clone https://github.com/Isallkun/isp-ticket-backend
+    cd isp-ticket-backend
+    ```
+
+2. **Install Dependencies**
+
+    ```bash
+    composer install
+    npm install
+    ```
+
+3. **Environment Setup**
+
+    ```bash
+    cp .env.example .env
+    php artisan key:generate
+    ```
+
+4. **Database Configuration**
+   Edit file `.env`:
+
+    ```env
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=isp_ticket_system
+    DB_USERNAME=your_username
+    DB_PASSWORD=your_password
+    ```
+
+5. **Run Migration**
+
+    ```bash
+    php artisan migrate
+    ```
+
+6. **Serve Application**
+
+    ```bash
+    php artisan serve
+    ```
+
+7. **Access Application**
+    - URL: `http://127.0.0.1:8000`
+    - Register admin account pertama Anda dengan role "Admin"
+
+## 📁 Struktur Project
+
+```
+isp-ticket-backend/
+├── app/
+│   ├── Helpers/
+│   │   └── RoleHelper.php              # Role management utilities
+│   ├── Http/
+│   │   ├── Controllers/
+│   │   │   ├── AuthController.php    # Authentication logic
+│   │   │   ├── CustomerController.php # Customer management
+│   │   │   ├── TicketController.php   # Ticket management
+│   │   │   └── UserController.php      # User management (Admin only)
+│   │   ├── Middleware/
+│   │   │   ├── PermissionMiddleware.php # Permission-based access
+│   │   │   └── RoleMiddleware.php       # Role-based access
+│   │   └── Requests/
+│   ├── Models/
+│   │   ├── Customer.php              # Customer model
+│   │   ├── Ticket.php                 # Ticket model
+│   │   ├── TicketLog.php              # Ticket activity log
+│   │   └── User.php                   # User model dengan role methods
+├── database/
+│   └── migrations/                     # Database schema
+├── resources/
+│   ├── views/
+│   │   ├── auth/                      # Authentication views
+│   │   ├── customers/                 # Customer management views
+│   │   ├── tickets/                   # Ticket management views
+│   │   ├── users/                     # User management views (Admin)
+│   │   ├── home.blade.php             # Dynamic dashboard
+│   │   └── layouts/
+│   │       └── sidebar.blade.php      # Main layout dengan navigation
+│   └── assets/                        # Static assets
+├── routes/
+│   └── web.php                        # Web routes dengan role protection
+└── README.md
+```
+
+## 🔐 Role & Permission System
+
+### Role Hierarchy
+
+1. **Admin** - Level 3: Full system access
+2. **NOC Agent** - Level 2: Ticket processing & technical operations
+3. **Customer Service** - Level 1: Customer interaction & ticket creation
+
+### Permission Matrix
+
+| Fitur               | Admin | NOC Agent | Customer Service |
+| ------------------- | ----- | --------- | ---------------- |
+| Dashboard           | ✅    | ✅        | ✅               |
+| Buat Tiket          | ✅    | ✅        | ✅               |
+| Edit Tiket          | ✅    | ✅        | ❌               |
+| Update Status       | ✅    | ✅        | ❌               |
+| Hapus Tiket         | ✅    | ✅        | ❌               |
+| Lihat Tiket         | ✅    | ✅        | ✅ (Own)         |
+| Manajemen Pelanggan | ✅    | ✅        | ✅               |
+| Manajemen User      | ✅    | ❌        | ❌               |
+
+## 🎯 Alur Kerja Sistem
+
+1. **Customer Service** menerima laporan gangguan dari pelanggan
+2. **CS** membuat tiket dengan informasi lengkap dan prioritas
+3. **NOC Agent** menerima tiket dan melakukan analisis teknis
+4. **NOC** memperbarui status tiket sesuai progres penanganan
+5. **Admin** memonitor keseluruhan operasional sistem
+
+## 🎨 UI/UX Features
+
+-   **Modern Design**: Gradient backgrounds dengan animasi smooth
+-   **Responsive**: Optimal untuk desktop dan mobile
+-   **Interactive**: Hover effects, transitions, dan micro-interactions
+-   **Role-Specific**: Menu dan dashboard yang beradaptasi berdasarkan role
+-   **User-Friendly**: Intuitive navigation dan clear visual hierarchy
+
+## 🔧 Development Features
+
+-   **Role-Based Middleware**: Secure access control dengan `RoleMiddleware` dan `PermissionMiddleware`
+-   **Helper Classes**: Modular dan reusable code dengan `RoleHelper`
+-   **Custom Validation**: Input validation dengan error handling
+-   **Logging**: Complete activity tracking dengan `TicketLog`
+-   **Database Relations**: Proper Eloquent relationships
+-   **Security**: CSRF protection dan session management
+
+## 📊 Database Schema
+
+### Users Table
+
+```sql
+- id (Primary Key)
+- name
+- email (Unique)
+- password (Hashed)
+- role (Enum: Admin, CS, NOC)
+- timestamps
+```
+
+### Customers Table
+
+```sql
+- id (Primary Key)
+- name
+- email (Unique)
+- phone
+- address
+- timestamps
+```
+
+### Tickets Table
+
+```sql
+- id (Primary Key)
+- customer_id (Foreign Key)
+- title
+- description
+- priority (Low, Medium, High, Critical)
+- status (Open, In Progress, Resolved, Closed)
+- category
+- assigned_to
+- timestamps
+```
+
+### TicketLogs Table
+
+```sql
+- id (Primary Key)
+- ticket_id (Foreign Key)
+- status
+- user_id (Foreign Key)
+- timestamps
+```
+
+## 🚀 Deployment Notes
+
+### Environment Variables
+
+```env
+APP_NAME="ISP Ticket System"
+APP_ENV=production
+APP_KEY=your_app_key
+APP_DEBUG=false
+APP_URL=your_domain
+
+DB_CONNECTION=mysql
+DB_HOST=your_host
+DB_PORT=3306
+DB_DATABASE=your_database
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+```
+
+### Production Setup
+
+```bash
+composer install --no-dev --optimize-autoloader
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+php artisan migrate --force
+```
+
+## 🎫 API Endpoints
+
+### Authentication
+
+-   `POST /login` - User login
+-   `POST /register` - User registration
+-   `POST /logout` - User logout
+
+### Tickets
+
+-   `GET /tickets` - List tickets (role-based filtering)
+-   `POST /tickets` - Create new ticket
+-   `GET /tickets/{id}` - Get ticket details
+-   `PUT /tickets/{id}` - Update ticket
+-   `DELETE /tickets/{id}` - Delete ticket
+-   `PATCH /tickets/{id}/status` - Update ticket status
+
+### Customers
+
+-   `GET /customers` - List customers
+-   `POST /customers` - Create customer
+-   `GET /customers/{id}` - Get customer details
+-   `PUT /customers/{id}` - Update customer
+-   `DELETE /customers/{id}` - Delete customer
+
+### Users (Admin Only)
+
+-   `GET /users` - List users
+-   `POST /users` - Create user
+-   `GET /users/{id}` - Get user details
+-   `PUT /users/{id}` - Update user
+-   `DELETE /users/{id}` - Delete user
+
+## 🤝 Kontribusi
+
+1. Fork repository
+2. Buat branch fitur baru (`git checkout -b feature/AmazingFeature`)
+3. Commit perubahan (`git commit -m 'Add some AmazingFeature'`)
+4. Push ke branch (`git push origin feature/AmazingFeature`)
+5. Buka Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+**© 2025 ISP Ticket Management System. All rights reserved.**
+
+_Built with ❤️ using Laravel_
