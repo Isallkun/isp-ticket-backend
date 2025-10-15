@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Customer extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'phone', 'address', 'package'];
+    protected $fillable = ['name', 'email', 'phone', 'address', 'company'];
 
 
     public function tickets() {

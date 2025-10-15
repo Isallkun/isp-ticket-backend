@@ -7,11 +7,11 @@ use App\Http\Controllers\TicketController;
 
 // ✅ Halaman awal: redirect ke login
 Route::get('/', function () {
-    return redirect()->route('login.form');
+    return redirect()->route('login');
 });
 
 // ✅ Auth Routes
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login.form');
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'webLogin'])->name('login.post');
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register.form');
 Route::post('/register', [AuthController::class, 'webRegister'])->name('register.post');
@@ -29,6 +29,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
     Route::get('/customers/create', [CustomerController::class, 'create'])->name('customers.create');
     Route::post('/customers', [CustomerController::class, 'store'])->name('customers.store');
+    Route::get('/customers/{id}', [CustomerController::class, 'show'])->name('customers.show');
     Route::get('/customers/{id}/edit', [CustomerController::class, 'edit'])->name('customers.edit');
     Route::put('/customers/{id}', [CustomerController::class, 'update'])->name('customers.update');
     Route::delete('/customers/{id}', [CustomerController::class, 'destroy'])->name('customers.destroy');

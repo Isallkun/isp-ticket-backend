@@ -19,9 +19,11 @@ class TicketController extends Controller
         return view('tickets.index', compact('tickets'));
     }
 
-    public function create() {
+    public function create(Request $request) {
         $customers = Customer::all();
-        return view('tickets.form', compact('customers'));
+        $selectedCustomerId = $request->get('customer_id');
+
+        return view('tickets.form', compact('customers', 'selectedCustomerId'));
     }
 
     /**

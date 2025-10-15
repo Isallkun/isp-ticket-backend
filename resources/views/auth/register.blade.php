@@ -401,7 +401,7 @@
                     <div class="register-section text-center">
                         <small class="text-muted">
                             Sudah punya akun?
-                            <a href="{{ route('login.form') }}">Login di sini</a>
+                            <a href="{{ route('login') }}">Login di sini</a>
                         </small>
                     </div>
                 </div>

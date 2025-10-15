@@ -2,42 +2,54 @@
 
 @section('content')
 <style>
-    .create-ticket-wrapper {
-        background: transparent;
+    .ticket-form-wrapper {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        min-height: 100vh;
+        padding: 1.5rem 0;
     }
 
-    .page-header {
-        background: white;
+    .form-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         border-radius: 12px;
-        padding: 1.25rem 1.5rem;
+        padding: 1.5rem;
         margin-bottom: 1.5rem;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        color: white;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
         animation: fadeInDown 0.5s ease-out;
     }
 
-    @keyframes fadeInDown {
-        from {
-            opacity: 0;
-            transform: translateY(-20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    .form-header::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -20%;
+        width: 150px;
+        height: 150px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        animation: float 6s ease-in-out infinite;
     }
 
-    .page-header h3 {
-        font-weight: 700;
-        color: #2d3748;
-        margin: 0;
+    @keyframes float {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-15px) rotate(180deg); }
+    }
+
+    .form-header h2 {
         font-size: 1.5rem;
+        font-weight: 700;
+        margin: 0;
         display: flex;
         align-items: center;
         gap: 0.75rem;
     }
 
-    .page-header h3 i {
-        color: #667eea;
+    .form-header p {
+        margin: 0.5rem 0 0 0;
+        opacity: 0.9;
+        font-size: 0.9rem;
     }
 
     .breadcrumb-custom {
@@ -48,12 +60,21 @@
     }
 
     .breadcrumb-custom .breadcrumb-item {
-        color: #64748b;
+        color: rgba(255, 255, 255, 0.8);
     }
 
     .breadcrumb-custom .breadcrumb-item.active {
-        color: #667eea;
+        color: white;
         font-weight: 600;
+    }
+
+    .breadcrumb-custom .breadcrumb-item a {
+        color: rgba(255, 255, 255, 0.9);
+        text-decoration: none;
+    }
+
+    .breadcrumb-custom .breadcrumb-item a:hover {
+        color: white;
     }
 
     .form-card {
@@ -323,24 +344,21 @@
     }
 </style>
 
-<div class="create-ticket-wrapper">
+<div class="ticket-form-wrapper">
     <div class="container-fluid">
-        <!-- Page Header -->
-        <div class="page-header">
-            <div class="d-flex justify-content-between align-items-center">
-                <div>
-                    <h3>
-                        <i class="fas fa-plus-circle"></i>
-                        Buat Tiket Gangguan Baru
-                    </h3>
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb breadcrumb-custom">
-                            <li class="breadcrumb-item"><a href="{{ route('tickets.index') }}">Tiket</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Buat Baru</li>
-                        </ol>
-                    </nav>
-                </div>
-            </div>
+        <!-- Form Header -->
+        <div class="form-header">
+            <h2>
+                <i class="fas fa-plus-circle"></i>
+                {{ isset($ticket) ? 'Edit Tiket Gangguan' : 'Buat Tiket Gangguan Baru' }}
+            </h2>
+            <p>{{ isset($ticket) ? 'Perbarui informasi tiket gangguan yang ada' : 'Lengkapi formulir di bawah untuk membuat tiket gangguan baru' }}</p>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-custom">
+                    <li class="breadcrumb-item"><a href="{{ route('tickets.index') }}">Tiket</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ isset($ticket) ? 'Edit' : 'Buat Baru' }}</li>
+                </ol>
+            </nav>
         </div>
 
         <div class="row justify-content-center">
@@ -362,8 +380,12 @@
                 <!-- Form Card -->
                 <div class="card form-card">
                     <div class="card-body">
-                        <form action="{{ route('tickets.store') }}" method="POST">
+                        <form action="{{ isset($ticket) ? route('tickets.update', $ticket->id) : route('tickets.store') }}"
+                              method="{{ isset($ticket) ? 'PUT' : 'POST' }}">
                             @csrf
+                            @if(isset($ticket))
+                                @method('PUT')
+                            @endif
 
                             <!-- Section 1: Informasi Pelanggan -->
                             <div class="form-section">
@@ -386,7 +408,8 @@
                                                     required>
                                                 <option value="">Pilih Pelanggan</option>
                                                 @foreach($customers as $customer)
-                                                <option value="{{ $customer->id }}" {{ old('customer_id') == $customer->id ? 'selected' : '' }}>
+                                                <option value="{{ $customer->id }}"
+                                                        {{ old('customer_id', isset($selectedCustomerId) ? $selectedCustomerId : (isset($ticket) ? $ticket->customer_id : '')) == $customer->id ? 'selected' : '' }}>
                                                     {{ $customer->name }} - {{ $customer->phone }}
                                                 </option>
                                                 @endforeach
@@ -410,10 +433,10 @@
                                                     name="priority"
                                                     required>
                                                 <option value="">Pilih Prioritas</option>
-                                                <option value="Low" {{ old('priority') == 'Low' ? 'selected' : '' }}>Low - Rendah</option>
-                                                <option value="Medium" {{ old('priority') == 'Medium' ? 'selected' : '' }}>Medium - Sedang</option>
-                                                <option value="High" {{ old('priority') == 'High' ? 'selected' : '' }}>High - Tinggi</option>
-                                                <option value="Critical" {{ old('priority') == 'Critical' ? 'selected' : '' }}>Critical - Kritis</option>
+                                                <option value="Low" {{ old('priority', isset($ticket) ? $ticket->priority : '') == 'Low' ? 'selected' : '' }}>Low - Rendah</option>
+                                                <option value="Medium" {{ old('priority', isset($ticket) ? $ticket->priority : '') == 'Medium' ? 'selected' : '' }}>Medium - Sedang</option>
+                                                <option value="High" {{ old('priority', isset($ticket) ? $ticket->priority : '') == 'High' ? 'selected' : '' }}>High - Tinggi</option>
+                                                <option value="Critical" {{ old('priority', isset($ticket) ? $ticket->priority : '') == 'Critical' ? 'selected' : '' }}>Critical - Kritis</option>
                                             </select>
                                             @error('priority')
                                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -446,7 +469,7 @@
                                            class="form-control form-control-modern @error('title') is-invalid @enderror"
                                            id="title"
                                            name="title"
-                                           value="{{ old('title') }}"
+                                           value="{{ old('title', isset($ticket) ? $ticket->title : '') }}"
                                            placeholder="Contoh: Internet tidak bisa terhubung"
                                            required>
                                     @error('title')
@@ -466,7 +489,7 @@
                                               name="description"
                                               rows="5"
                                               placeholder="Jelaskan detail gangguan yang dialami..."
-                                              required>{{ old('description') }}</textarea>
+                                              required>{{ old('description', isset($ticket) ? $ticket->description : '') }}</textarea>
                                     @error('description')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -492,10 +515,10 @@
                                                     id="category"
                                                     name="category">
                                                 <option value="">Pilih Kategori</option>
-                                                <option value="Internet" {{ old('category') == 'Internet' ? 'selected' : '' }}>Internet</option>
-                                                <option value="Telepon" {{ old('category') == 'Telepon' ? 'selected' : '' }}>Telepon</option>
-                                                <option value="TV" {{ old('category') == 'TV' ? 'selected' : '' }}>TV</option>
-                                                <option value="Lainnya" {{ old('category') == 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
+                                                <option value="Internet" {{ old('category', isset($ticket) ? $ticket->category : '') == 'Internet' ? 'selected' : '' }}>Internet</option>
+                                                <option value="Telepon" {{ old('category', isset($ticket) ? $ticket->category : '') == 'Telepon' ? 'selected' : '' }}>Telepon</option>
+                                                <option value="TV" {{ old('category', isset($ticket) ? $ticket->category : '') == 'TV' ? 'selected' : '' }}>TV</option>
+                                                <option value="Lainnya" {{ old('category', isset($ticket) ? $ticket->category : '') == 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
                                             </select>
                                             @error('category')
                                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -534,7 +557,7 @@
                                 </a>
                                 <button type="submit" class="btn-modern btn-submit">
                                     <i class="fas fa-paper-plane"></i>
-                                    Buat Tiket
+                                    {{ isset($ticket) ? 'Update Tiket' : 'Buat Tiket' }}
                                 </button>
                             </div>
                         </form>

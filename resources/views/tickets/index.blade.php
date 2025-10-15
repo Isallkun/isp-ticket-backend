@@ -329,18 +329,26 @@
         text-align: center;
         padding: 3rem 1rem;
         color: #94a3b8;
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        border-radius: 10px;
+        margin: 1rem 0;
     }
 
     .empty-state i {
         font-size: 4rem;
         margin-bottom: 1rem;
         opacity: 0.3;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
     }
 
     .empty-state p {
         font-size: 1.1rem;
         font-weight: 500;
         margin: 0;
+        color: #64748b;
     }
 
     @media (max-width: 768px) {
