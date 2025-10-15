@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use App\Helpers\RoleHelper;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -47,6 +48,7 @@ class User extends Authenticatable implements JWTSubject
             'password' => 'hashed',
         ];
     }
+
     public function ticketLogs() {
         return $this->hasMany(TicketLog::class);
     }
@@ -67,5 +69,76 @@ class User extends Authenticatable implements JWTSubject
         return [
             'role' => $this->role,
         ];
+    }
+
+    /**
+     * Role helper methods
+     */
+    public function isCS(): bool
+    {
+        return $this->role === RoleHelper::CS;
+    }
+
+    public function isNOC(): bool
+    {
+        return $this->role === RoleHelper::NOC;
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === RoleHelper::ADMIN;
+    }
+
+    public function hasRole(string $role): bool
+    {
+        return RoleHelper::hasRole($this, $role);
+    }
+
+    public function hasAnyRole(array $roles): bool
+    {
+        return RoleHelper::hasAnyRole($this, $roles);
+    }
+
+    public function hasMinimumRole(string $minimumRole): bool
+    {
+        return RoleHelper::hasMinimumRole($this, $minimumRole);
+    }
+
+    public function hasPermission(string $action): bool
+    {
+        return RoleHelper::can($this, $action);
+    }
+
+    public function getRoleDisplayName(): string
+    {
+        return RoleHelper::getRoleDisplayName($this->role);
+    }
+
+    public function getDashboardData(): array
+    {
+        return RoleHelper::getDashboardData($this);
+    }
+
+    /**
+     * Scope queries by role
+     */
+    public function scopeCS($query)
+    {
+        return $query->where('role', RoleHelper::CS);
+    }
+
+    public function scopeNOC($query)
+    {
+        return $query->where('role', RoleHelper::NOC);
+    }
+
+    public function scopeAdmin($query)
+    {
+        return $query->where('role', RoleHelper::ADMIN);
+    }
+
+    public function scopeNotAdmin($query)
+    {
+        return $query->where('role', '!=', RoleHelper::ADMIN);
     }
 }

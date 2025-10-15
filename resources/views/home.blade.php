@@ -359,11 +359,17 @@
     <div class="container-fluid">
         <!-- Header -->
         <div class="dashboard-header d-flex justify-content-between align-items-center">
-            <h2>
-                <i class="fas fa-tachometer-alt"></i>Dashboard
-            </h2>
+            <div>
+                <h2>
+                    <i class="fas fa-tachometer-alt"></i>{{ auth()->user()->getDashboardData()['title'] }}
+                </h2>
+                <p class="welcome-text">
+                    {{ auth()->user()->getDashboardData()['description'] }}
+                </p>
+            </div>
             <p class="welcome-text">
                 Selamat datang, <strong>{{ auth()->user()->name }}</strong>!
+                <br><small class="opacity-75">{{ auth()->user()->getRoleDisplayName() }}</small>
             </p>
         </div>
 
@@ -440,26 +446,43 @@
                     </div>
                     <div class="card-body">
                         <div class="row g-2">
+                            @if(auth()->user()->hasPermission('create-tickets'))
                             <div class="col-md-6 col-lg-3">
                                 <a href="{{ route('tickets.create') }}" class="btn btn-action primary w-100">
                                     <i class="fas fa-plus"></i>Buat Tiket Baru
                                 </a>
                             </div>
+                            @endif
+
+                            @if(auth()->user()->hasPermission('create-customers'))
                             <div class="col-md-6 col-lg-3">
                                 <a href="{{ route('customers.create') }}" class="btn btn-action success w-100">
                                     <i class="fas fa-user-plus"></i>Tambah Pelanggan
                                 </a>
                             </div>
+                            @endif
+
                             <div class="col-md-6 col-lg-3">
                                 <a href="{{ route('tickets.index') }}" class="btn btn-action info w-100">
-                                    <i class="fas fa-list"></i>Lihat Semua Tiket
+                                    <i class="fas fa-list"></i>Lihat Tiket
                                 </a>
                             </div>
+
+                            @if(auth()->user()->hasPermission('view-customers'))
                             <div class="col-md-6 col-lg-3">
                                 <a href="{{ route('customers.index') }}" class="btn btn-action warning w-100">
                                     <i class="fas fa-users"></i>Lihat Pelanggan
                                 </a>
                             </div>
+                            @endif
+
+                            @if(auth()->user()->isAdmin())
+                            <div class="col-md-6 col-lg-3">
+                                <a href="{{ route('users.index') }}" class="btn btn-action primary w-100">
+                                    <i class="fas fa-user-shield"></i>Kelola Users
+                                </a>
+                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>

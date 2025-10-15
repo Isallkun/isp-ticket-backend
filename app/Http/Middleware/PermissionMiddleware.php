@@ -7,14 +7,14 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Helpers\RoleHelper;
 
-class RoleMiddleware
+class PermissionMiddleware
 {
     /**
      * Handle an incoming request.
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, ...$roles): Response
+    public function handle(Request $request, Closure $next, string $permission): Response
     {
         $user = $request->user();
 
@@ -22,20 +22,20 @@ class RoleMiddleware
             return redirect()->route('login');
         }
 
-        // Check if user has any of the required roles
-        if (!RoleHelper::hasAnyRole($user, $roles)) {
+        // Check if user has the required permission
+        if (!RoleHelper::can($user, $permission)) {
             // For API requests, return JSON response
             if ($request->expectsJson()) {
                 return response()->json([
-                    'message' => 'Unauthorized. Required roles: ' . implode(', ', $roles),
+                    'message' => 'Unauthorized. Required permission: ' . $permission,
                     'user_role' => $user->role,
-                    'required_roles' => $roles
+                    'required_permission' => $permission
                 ], 403);
             }
 
             // For web requests, redirect with error message
             return redirect()->route('home')
-                ->with('error', 'Anda tidak memiliki izin untuk mengakses halaman ini.');
+                ->with('error', 'Anda tidak memiliki izin untuk melakukan tindakan ini.');
         }
 
         return $next($request);

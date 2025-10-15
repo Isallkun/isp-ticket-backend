@@ -7,6 +7,7 @@ use App\Models\TicketLog;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Helpers\RoleHelper;
 
 class TicketController extends Controller
 {
@@ -15,7 +16,26 @@ class TicketController extends Controller
      */
     public function index()
     {
-        $tickets = Ticket::with('customer', 'logs')->get();
+        $user = auth()->user();
+
+        // Filter tickets based on user role
+        if ($user->isAdmin()) {
+            // Admin can see all tickets
+            $tickets = Ticket::with('customer', 'logs.user')->get();
+        } elseif ($user->isNOC()) {
+            // NOC can see all tickets
+            $tickets = Ticket::with('customer', 'logs.user')->get();
+        } elseif ($user->isCS()) {
+            // CS can only see tickets they created or all tickets (depending on requirements)
+            // For now, let CS see all tickets they created
+            $tickets = Ticket::with('customer', 'logs.user')
+                ->whereHas('logs', function($query) use ($user) {
+                    $query->where('user_id', $user->id);
+                })->get();
+        } else {
+            $tickets = collect();
+        }
+
         return view('tickets.index', compact('tickets'));
     }
 

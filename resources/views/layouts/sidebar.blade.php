@@ -46,6 +46,10 @@
             width: 70px;
         }
 
+        .sidebar.collapsed .nav-item {
+            margin: 0.15rem 0.5rem;
+        }
+
         .sidebar-header {
             padding: 1.25rem 1rem;
             border-bottom: 2px solid rgba(255, 255, 255, 0.15);
@@ -113,6 +117,14 @@
             opacity: 0;
             width: 0;
             overflow: hidden;
+        }
+
+        .sidebar.collapsed .sidebar-header {
+            padding: 1.25rem 0.5rem;
+        }
+
+        .sidebar.collapsed .sidebar-brand .brand-icon {
+            margin: 0;
         }
 
         .sidebar-nav {
@@ -205,10 +217,13 @@
 
         .sidebar.collapsed .nav-link {
             justify-content: center;
+            padding: 0.75rem 0.5rem;
+            min-height: 48px;
         }
 
         .sidebar.collapsed .nav-link i {
             margin-right: 0;
+            font-size: 1.1rem;
         }
 
         /* Admin Section Separator */
@@ -219,7 +234,7 @@
         }
 
         .sidebar.collapsed .nav-separator {
-            margin: 1rem 1rem 0.5rem;
+            margin: 1rem 0.5rem 0.5rem;
         }
 
         /* Sidebar Footer */
@@ -231,6 +246,10 @@
             padding: 1rem;
             border-top: 2px solid rgba(255, 255, 255, 0.15);
             background: rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar.collapsed .sidebar-footer {
+            padding: 1rem 0.5rem;
         }
 
         .user-info {
@@ -287,6 +306,7 @@
 
         .sidebar.collapsed .user-info {
             justify-content: center;
+            margin-bottom: 0.5rem;
         }
 
         .logout-btn {
@@ -306,6 +326,10 @@
             text-decoration: none;
         }
 
+        .sidebar.collapsed .logout-btn {
+            padding: 0.65rem 0.5rem;
+        }
+
         .logout-btn:hover {
             background: rgba(255, 255, 255, 0.25);
             color: white;
@@ -315,6 +339,10 @@
 
         .logout-btn i {
             font-size: 1rem;
+        }
+
+        .sidebar.collapsed .logout-btn i {
+            font-size: 1.1rem;
         }
 
         .logout-btn-text {
@@ -467,20 +495,28 @@
                         <span class="nav-link-text">Dashboard</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('tickets.*') ? 'active' : '' }}" href="{{ route('tickets.index') }}">
-                        <i class="fas fa-ticket-alt"></i>
-                        <span class="nav-link-text">Tiket</span>
-                    </a>
-                </li>
+                @if(auth()->user()->hasAnyRole(['CS', 'NOC', 'Admin']))
+                <div class="nav-separator"></div>
+                <div class="nav-section-title">Manajemen Data</div>
+
+                @if(auth()->user()->hasPermission('view-customers'))
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('customers.*') ? 'active' : '' }}" href="{{ route('customers.index') }}">
                         <i class="fas fa-users"></i>
                         <span class="nav-link-text">Pelanggan</span>
                     </a>
                 </li>
+                @endif
 
-                @if(auth()->user()->role === 'admin')
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('tickets.*') ? 'active' : '' }}" href="{{ route('tickets.index') }}">
+                        <i class="fas fa-ticket-alt"></i>
+                        <span class="nav-link-text">Tiket</span>
+                    </a>
+                </li>
+                @endif
+
+                @if(auth()->user()->isAdmin())
                 <div class="nav-separator"></div>
                 <div class="nav-section-title">Administrator</div>
                 <li class="nav-item">

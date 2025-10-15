@@ -8,10 +8,23 @@ use Illuminate\Database\Eloquent\Model;
 class TicketLog extends Model
 {
     use HasFactory;
-    protected $fillable = ['ticket_id', 'status', 'user_id', 'changed_at'];
 
+    protected $fillable = [
+        'ticket_id',
+        'status',
+        'user_id'
+    ];
+
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
+
+    public function ticket() {
+        return $this->belongsTo(Ticket::class);
+    }
 
     public function user() {
-    return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 }
